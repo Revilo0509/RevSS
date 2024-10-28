@@ -1,3 +1,5 @@
+import os
+
 fileName = "RevSS-Save.RevSS"
 
 def save(adress,data):
@@ -84,3 +86,14 @@ def remove(name):
     
     with open(fileName, "w") as file:
         file.writelines(lines)
+
+def clearAllVariables():
+    open(fileName, "w")
+
+def removeVariableFile():
+    try:
+        os.remove(fileName)
+    except FileNotFoundError:
+        raise LookupError(f"{fileName} does not exist.")
+    except PermissionError:
+        raise PermissionError(f"Cannot delete {fileName}.")
