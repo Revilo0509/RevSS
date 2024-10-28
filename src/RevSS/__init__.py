@@ -48,3 +48,17 @@ def load(requestedName):
             return str(data[2])
         if data[1] == "float":
             return float(data[2])
+    
+    file.close()
+
+def listVariables():
+    file = open(fileName, "r")
+
+    variableNames = []
+
+    for data in file.readlines():
+        data = processList(data)
+        variableNames.append(data[0])
+
+    file.close()
+    return variableNames
