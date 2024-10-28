@@ -1,6 +1,10 @@
 fileName = "RevSS-Save.RevSS"
 
 def save(adress,data):
+
+    if type(adress) != str:
+        raise TypeError
+
     saveFile = open(fileName, "a")
     saveFile.write(adress + "|" + str(type(data)).removeprefix("<class '").removesuffix("'>") + "|" + str(data) + "\n")
     saveFile.close()
@@ -24,6 +28,10 @@ def processList(list):
             continue
 
 def load(requestedName):
+
+    if type(requestedName) != str:
+        raise TypeError
+
     file = open(fileName, "r")
 
     for data in file.readlines():
@@ -40,11 +48,3 @@ def load(requestedName):
             return str(data[2])
         if data[1] == "float":
             return float(data[2])
-
-
-#save("Int", 1234)
-#save("Bool", True)
-#save("String", "Hello, World!")
-#save("Float", 3.14)
-
-print(load("Int"))
