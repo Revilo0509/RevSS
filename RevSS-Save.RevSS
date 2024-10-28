@@ -1,0 +1,4 @@
+Int|int|1234
+Bool|bool|True
+String|str|Hello, World!
+Float|float|3.14
