@@ -28,9 +28,9 @@ def processList(list):
             data += i
             continue
 
-def load(requestedName):
+def load(name):
 
-    if type(requestedName) != str:
+    if type(name) != str:
         raise TypeError
 
     with open(fileName, "r") as file:
@@ -38,7 +38,7 @@ def load(requestedName):
         for data in file.readlines():
             data = processList(list(data))
 
-            if data[0] != requestedName:
+            if data[0] != name:
                 continue
             
             if data[1] == "int":
