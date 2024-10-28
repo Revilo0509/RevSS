@@ -5,9 +5,8 @@ def save(adress,data):
     if type(adress) != str:
         raise TypeError
 
-    saveFile = open(fileName, "a")
-    saveFile.write(adress + "|" + str(type(data)).removeprefix("<class '").removesuffix("'>") + "|" + str(data) + "\n")
-    saveFile.close()
+    with open(fileName, "a") as file:
+        file.write(adress + "|" + str(type(data)).removeprefix("<class '").removesuffix("'>") + "|" + str(data) + "\n")
 
 def processList(list):
     processedList = []
@@ -32,33 +31,56 @@ def load(requestedName):
     if type(requestedName) != str:
         raise TypeError
 
-    file = open(fileName, "r")
+    with open(fileName, "r") as file:
 
-    for data in file.readlines():
-        data = processList(list(data))
+        for data in file.readlines():
+            data = processList(list(data))
 
-        if data[0] != requestedName:
-            continue
-        
-        if data[1] == "int":
-            return int(data[2])
-        if data[1] == "bool":
-            return bool(data[2])
-        if data[1] == "string":
-            return str(data[2])
-        if data[1] == "float":
-            return float(data[2])
-    
-    file.close()
+            if data[0] != requestedName:
+                continue
+            
+            if data[1] == "int":
+                return int(data[2])
+            if data[1] == "bool":
+                return bool(data[2])
+            if data[1] == "string":
+                return str(data[2])
+            if data[1] == "float":
+                return float(data[2])
 
 def listVariables():
-    file = open(fileName, "r")
+    with open(fileName, "r") as file:
 
-    variableNames = []
+        variableNames = []
 
-    for data in file.readlines():
-        data = processList(data)
-        variableNames.append(data[0])
+        for data in file.readlines():
+            data = processList(list(data))
+            variableNames.append(data[0])
 
-    file.close()
-    return variableNames
+        print(variableNames)
+        return variableNames
+
+def findVariableLine(name, fileName):
+    with open(fileName, "r") as file:
+        for line_num, data in enumerate(file):
+
+            data2 = processList(list(data))
+            if data2[0] == name:
+                return line_num
+
+    raise ValueError(f"The variable '{name}' was not found in the file.")
+
+def remove(name):
+
+    lineToRemove = findVariableLine(name)
+
+    with open(fileName, "r") as file:
+        lines = file.readlines()
+    
+    if 0 <= lineToRemove < len(lines):
+        del lines[lineToRemove]
+    else:
+        raise IndexError(f"line {lineToRemove} is out of range.")
+    
+    with open(fileName, "w") as file:
+        file.writelines(lines)
