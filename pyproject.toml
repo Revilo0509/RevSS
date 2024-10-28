@@ -14,10 +14,10 @@ requires-python = ">=3.8"
 dependencies = [
 ]
 
-#[project.urls]
-#Homepage = ""
-#Documentation = ""
-#Issues = ""
+[project.urls]
+Homepage = "https://github.com/Revilo0509/RevSS"
+Documentation = "https://github.com/Revilo0509/RevSS/wiki"
+Issues = "https://github.com/Revilo0509/RevSS/issues"
 
 [build-system]
 requires = ["setuptools>=61.0"]
