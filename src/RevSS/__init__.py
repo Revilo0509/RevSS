@@ -60,7 +60,7 @@ def listVariables():
         print(variableNames)
         return variableNames
 
-def findVariableLine(name, fileName):
+def findVariableLine(name):
     with open(fileName, "r") as file:
         for line_num, data in enumerate(file):
 
