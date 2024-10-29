@@ -2,7 +2,7 @@ import os
 
 fileName = "RevSS-Save.RevSS"
 
-def save(adress,data):
+def save(adress,data): # TODO: if variable already exists to update it instead of adding it again
 
     if type(adress) != str:
         raise TypeError
