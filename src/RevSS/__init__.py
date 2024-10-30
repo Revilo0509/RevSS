@@ -42,13 +42,22 @@ def listVariables():
         print(variableNames)
         return variableNames
 
-def save(adress,data): # TODO: if variable already exists to update it instead of adding it again
+def save(name,data):
 
-    if type(adress) != str:
+    if type(name) != str:
         raise TypeError
 
-    with open(fileName, "a") as file:
-        file.write(adress + "|" + str(type(data)).removeprefix("<class '").removesuffix("'>") + "|" + str(data) + "\n")
+    if not os.path.isfile(fileName):
+        file = open(fileName, "x")
+
+    try:
+        findVariableLine(name) ## check if variable already exists
+        remove(name)
+        save(name,data)
+    except ValueError:
+        with open(fileName, "a") as file:
+            dataType = str(type(data)).removeprefix("<class '").removesuffix("'>")
+            file.write(name + "|" + dataType + "|" + str(data) + "\n")
 
 def load(name):
 
