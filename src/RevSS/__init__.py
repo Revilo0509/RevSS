@@ -2,14 +2,6 @@ import os
 
 fileName = "RevSS-Save.RevSS"
 
-def save(adress,data): # TODO: if variable already exists to update it instead of adding it again
-
-    if type(adress) != str:
-        raise TypeError
-
-    with open(fileName, "a") as file:
-        file.write(adress + "|" + str(type(data)).removeprefix("<class '").removesuffix("'>") + "|" + str(data) + "\n")
-
 def processList(list):
     processedList = []
     data = ""
@@ -27,6 +19,36 @@ def processList(list):
         if i != "|":
             data += i
             continue
+
+def findVariableLine(name):
+    with open(fileName, "r") as file:
+        for line_num, data in enumerate(file):
+
+            data2 = processList(list(data))
+            if data2[0] == name:
+                return line_num
+
+    raise ValueError(f"The variable '{name}' was not found in the file.")
+
+def listVariables():
+    with open(fileName, "r") as file:
+
+        variableNames = []
+
+        for data in file.readlines():
+            data = processList(list(data))
+            variableNames.append(data[0])
+
+        print(variableNames)
+        return variableNames
+
+def save(adress,data): # TODO: if variable already exists to update it instead of adding it again
+
+    if type(adress) != str:
+        raise TypeError
+
+    with open(fileName, "a") as file:
+        file.write(adress + "|" + str(type(data)).removeprefix("<class '").removesuffix("'>") + "|" + str(data) + "\n")
 
 def load(name):
 
@@ -49,28 +71,6 @@ def load(name):
                 return str(data[2])
             if data[1] == "float":
                 return float(data[2])
-
-def listVariables():
-    with open(fileName, "r") as file:
-
-        variableNames = []
-
-        for data in file.readlines():
-            data = processList(list(data))
-            variableNames.append(data[0])
-
-        print(variableNames)
-        return variableNames
-
-def findVariableLine(name):
-    with open(fileName, "r") as file:
-        for line_num, data in enumerate(file):
-
-            data2 = processList(list(data))
-            if data2[0] == name:
-                return line_num
-
-    raise ValueError(f"The variable '{name}' was not found in the file.")
 
 def remove(name):
 
