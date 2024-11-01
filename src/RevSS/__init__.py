@@ -74,11 +74,11 @@ def load(name):
             
             if data[1] == "int":
                 return int(data[2])
-            if data[1] == "bool":
+            elif data[1] == "bool":
                 return bool(data[2])
-            if data[1] == "string":
+            elif data[1] == "string":
                 return str(data[2])
-            if data[1] == "float":
+            elif data[1] == "float":
                 return float(data[2])
 
 def remove(name):
