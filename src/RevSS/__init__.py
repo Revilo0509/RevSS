@@ -22,11 +22,11 @@ def processList(list):
 
 def findVariableLine(name):
     with open(fileName, "r") as file:
-        for line_num, data in enumerate(file):
+        for lineNum, data in enumerate(file):
 
             data2 = processList(list(data))
             if data2[0] == name:
-                return line_num
+                return lineNum
 
     raise ValueError(f"The variable '{name}' was not found in the file.")
 
